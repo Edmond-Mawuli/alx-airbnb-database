@@ -18,7 +18,7 @@ payment_id (PK), booking_id (FK → Booking(booking_id)), amount, payment_date,p
 review_id (PK),property_id (FK → Property(property_id)), user_id (FK → User(user_id)), rating (1–5), comment, created_at
 
 6. Message
-message_id (PK), sender_id (FK → User(user_id)), recipient_id (FK → User(user_id))
+message_id (PK), sender_id (FK → User(user_id)), recipient_id (FK → User(user_id)), message_body, sent_at
 
 ---
 ##Relationships
@@ -36,6 +36,7 @@ Property → Review: One property can have many reviews (1:N).
 
 User → Message: A user can send and receive many messages (self-referencing 1:N).
 
-message_body
+##Entity Relationship Diagram
+[Link To The ER Diagram](https://dbdiagram.io/d/airbnb-database-ERD-68b3ccb3777b52b76c540f29)
 
-sent_at
+
