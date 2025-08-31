@@ -21,7 +21,7 @@ review_id (PK),property_id (FK → Property(property_id)), user_id (FK → User(
 message_id (PK), sender_id (FK → User(user_id)), recipient_id (FK → User(user_id)), message_body, sent_at
 
 ---
-##Relationships
+## Relationships
 User → Property: One host can have many properties (1:N).
 
 User → Booking: One user (guest) can make many bookings (1:N).
@@ -36,7 +36,7 @@ Property → Review: One property can have many reviews (1:N).
 
 User → Message: A user can send and receive many messages (self-referencing 1:N).
 
-##Entity Relationship Diagram
+## Entity Relationship Diagram
 [Link To The ER Diagram](https://dbdiagram.io/d/airbnb-database-ERD-68b3ccb3777b52b76c540f29)
 
 
