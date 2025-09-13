@@ -8,7 +8,8 @@ SELECT
     u.name AS user_name,
     u.email
 FROM bookings b
-INNER JOIN users u ON b.user_id = u.id;
+INNER JOIN users u ON b.user_id = u.id
+ORDER BY b.id;   -- ✅ enforce order
 
 
 -- 2. LEFT JOIN: Retrieve all properties and their reviews, including properties that have no reviews
@@ -20,7 +21,8 @@ SELECT
     r.rating,
     r.comment
 FROM properties p
-LEFT JOIN reviews r ON p.id = r.property_id;
+LEFT JOIN reviews r ON p.id = r.property_id
+ORDER BY p.id, r.id;   -- ✅ order by property first, then review
 
 
 -- 3. FULL OUTER JOIN: Retrieve all users and all bookings,
@@ -34,4 +36,5 @@ SELECT
     b.start_date,
     b.end_date
 FROM users u
-FULL OUTER JOIN bookings b ON u.id = b.user_id;
+FULL OUTER JOIN bookings b ON u.id = b.user_id
+ORDER BY u.id, b.id;   -- ✅ order by user first, then booking
