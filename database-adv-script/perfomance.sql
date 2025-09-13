@@ -1,5 +1,6 @@
--- Initial complex query (unoptimized)
--- Retrieves all bookings along with user details, property details, and payment details
+-- Initial complex query (without optimization)
+-- Retrieves all bookings with user, property, and payment details
+EXPLAIN ANALYZE
 SELECT 
     b.id AS booking_id,
     b.start_date,
@@ -9,30 +10,32 @@ SELECT
     u.email,
     p.id AS property_id,
     p.name AS property_name,
-    p.location,
-    fp.id AS payment_id,
-    fp.amount,
-    fp.payment_date
+    pr.id AS payment_id,
+    pr.amount,
+    pr.status
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-JOIN fee_payments fp ON fp.booking_id = b.id;
+JOIN payments pr ON b.id = pr.booking_id;
 
-
--- Optimized query
--- Improvements:
--- 1. Use INNER JOIN only when needed; use LEFT JOIN if payments may be missing.
--- 2. Select only necessary columns instead of "*".
--- 3. Assume indexes already exist on user_id, property_id, and booking_id.
-
+-- Refactored query with WHERE + AND
+-- Optimized by filtering only active payments within a date range
+EXPLAIN ANALYZE
 SELECT 
     b.id AS booking_id,
     b.start_date,
     b.end_date,
+    u.id AS user_id,
     u.name AS user_name,
+    u.email,
+    p.id AS property_id,
     p.name AS property_name,
-    fp.amount
+    pr.id AS payment_id,
+    pr.amount,
+    pr.status
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-LEFT JOIN fee_payments fp ON fp.booking_id = b.id;
+JOIN payments pr ON b.id = pr.booking_id
+WHERE pr.status = 'completed'
+  AND b.start_date >= '2025-01-01';
